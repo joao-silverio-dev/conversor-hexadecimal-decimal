@@ -1,9 +1,9 @@
+#include <locale.h>
 #include <math.h>
 #include <stdio.h>
 #include <string.h>
-#if defined(_WIN32) || defined(_WIN64)
-#include <windows.h>
-#endif
+
+
 
 void decimalPraHexa(int decimal) {
     int resto;
@@ -29,9 +29,8 @@ int transformaCharParaDecimal(char hexa) {
 
 int hexadecimalPraDecimal(char hexadecimal[]) {
     int valores[100];
-    int valor;
-    int expoente = strlen(hexadecimal) - 1;
-    int resultado;
+    int valor = 0;
+    int resultado = 0;
     // Distribuindo valores pelo vetor valores[]
     for (int i = 0; i < strlen(hexadecimal); i++) {
         valor = hexadecimal[i] - '0';
@@ -55,38 +54,34 @@ int hexadecimalPraDecimal(char hexadecimal[]) {
 }
 
 int main() {
-#if defined(_WIN32) || defined(_WIN64)
-    setlocale(LC_ALL, "Portuguese");
-    SetConsoleOutputCP(CP_UTF8);
-#endif
+
+
     printf("Qual conversão deseja realizar? \n");
     printf("\t1 - Decimal para Hexadecimal\n\t2 - Hexadecimal para Decimal\n");
 
     int opcao;
-    printf("%d - Opção: ", opcao);
+    printf("Opção: ");
     scanf("%d", &opcao);
 
     if (opcao == 1) {
         int decimal;
         do {
-            printf("\nDigite um número decimal menor 63 e maior 0: ");
+            printf("\nDigite um número decimal maior 0: ");
             scanf("%d", &decimal);
-            if (decimal >= 63 || decimal <= 0) {
-                printf("\nPor favor digite um número menor que 63 e maior que 0\n");
+            if (decimal <= 0) {
+                printf("\nPor favor digite um número maior que 0\n");
             }
-        } while (decimal >= 63 || decimal <= 0);
+        } while (decimal <= 0);
         decimalPraHexa(decimal);
     }
     if (opcao == 2) {
-        char hexadecimal[6];
+        char hexadecimal[100];
         printf("\nDigite um número hexadecimal menor que 3F e maior que 0\n");
         scanf("%s", hexadecimal);
 
         int resultado = hexadecimalPraDecimal(hexadecimal);
-        printf("Resultado: %d", resultado - 1);
+        printf("Resultado: %d", resultado);
     }
-
-    char treco[100]; // NÃO MEXE
 
     return 0;
 }
